@@ -3,7 +3,7 @@ WORKDIR /src
 EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["WebAPI.csproj", "WebAPI/"]
+COPY ["WebAPI/WebAPI.csproj", "WebAPI/"]
 RUN dotnet restore "./WebAPI.csproj"
 COPY . "WebAPI/"
 WORKDIR "/src/WebAPI"
