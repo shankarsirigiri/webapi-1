@@ -1,16 +1,16 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
+WORKDIR /WebAPI
 EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
+WORKDIR /WebAPI
 COPY ["WebAPI.csproj", "."]
 RUN dotnet restore "./WebAPI.csproj"
 COPY . .
-WORKDIR "/src/."
-RUN dotnet build "WebAPI.csproj" -c Release -o /app/build
+WORKDIR "/WebAPI/."
+RUN dotnet build "WebAPI.csproj" -c Release -o /WebAPI/build
 FROM build AS publish
-RUN dotnet publish "WebAPI.csproj" -c Release -o /app/publish
+RUN dotnet publish "WebAPI.csproj" -c Release -o /WebAPI/publish
 FROM base AS final
-WORKDIR /app
+WORKDIR /WebAPI
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "WebAPI.dll"]
