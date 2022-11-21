@@ -34,7 +34,8 @@ on:
 
 env:
   AWS_REGION: us-east-1                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: testapp           # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: 
+weatherforecast           # set this to your Amazon ECR repository name
   
   ECS_SERVICE: sample-app-service                 # set this to your Amazon ECS service name
   ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
