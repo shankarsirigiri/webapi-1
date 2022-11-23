@@ -93,7 +93,7 @@ jobs:
       with:
         host: ${{ secrets.HOST_NAME }}
         username: ${{ secrets.SSH_USER_NAME }}
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         timeout: 60s
         envs: ${{ github.sha }}
