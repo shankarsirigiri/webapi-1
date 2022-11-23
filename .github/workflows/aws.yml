@@ -83,3 +83,18 @@ jobs:
         docker build -t $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        
+    - name: Docker pull & run from github
+      uses: appleboy/ssh-action@master
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+        REGISTRY_ALIAS: z8a4f8r0
+      with:
+        host: ec2-3-238-226-212.compute-1.amazonaws.com
+        username: ec2-user
+        key: ${{ secrets.ACTIONS_PRIVATE_KEY }}
+        port: 80
+        envs: ${{ github.sha }}
+        script: |
+            docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
+
