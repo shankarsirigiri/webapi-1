@@ -99,4 +99,4 @@ jobs:
         envs: ${{ github.sha }}
         debug: true
         script: |
-            docker pull  public.ecr.aws/z8a4f8r0/weatherforecast:latest
+            docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
