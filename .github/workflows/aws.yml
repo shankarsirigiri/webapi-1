@@ -99,4 +99,4 @@ jobs:
         timeout: 60s
         debug: true
         script: |
-            docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:latest
+            docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:91f41816badf30bbce2a37d74e0c64113258b7a3
