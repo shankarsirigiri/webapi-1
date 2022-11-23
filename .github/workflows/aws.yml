@@ -1,3 +1,4 @@
+
 # This workflow will build and push a new container image to Amazon ECR,
 # and then will deploy a new task definition to Amazon ECS, when there is a push to the "dev" branch.
 #
@@ -84,20 +85,18 @@ jobs:
         docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
+    - name: Docker pull & run from github
+      uses: appleboy/ssh-action@master
+      env:
+         ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+         REGISTRY_ALIAS: z8a4f8r0
       with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
-
-    - name: Deploy Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
-        
-    
+        host: ${{ secrets.HOST_NAME }}
+        username: ${{ secrets.SSH_USER_NAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        port: 22
+        timeout: 60s
+        envs: ${{ github.sha }}
+        debug: true
+        script: |
+            docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
