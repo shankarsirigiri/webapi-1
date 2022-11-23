@@ -93,7 +93,7 @@ jobs:
         host: ec2-3-238-226-212.compute-1.amazonaws.com
         username: ubuntu
         password: ${{ secrets.ACTIONS_PRIVATE_KEY }}
-        port: 80
+        port: 22
         envs: ${{ github.sha }}
         script: |
             docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
