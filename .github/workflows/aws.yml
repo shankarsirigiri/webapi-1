@@ -90,7 +90,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         REGISTRY_ALIAS: z8a4f8r0
       with:
-        host: ${{ secrets.ACTIONS_PRIVATE_KEY }}
+        host: ${{ secrets.HOST_NAME }}
         username: ubuntu
         password: ${{ secrets.ACTIONS_PRIVATE_KEY }}
         port: 22
