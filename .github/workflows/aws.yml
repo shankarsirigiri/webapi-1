@@ -90,7 +90,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         REGISTRY_ALIAS: z8a4f8r0
       with:
-        host: ec2-3-238-226-212.compute-1.amazonaws.com
+        host: ${{ secrets.ACTIONS_PRIVATE_KEY }}
         username: ubuntu
         password: ${{ secrets.ACTIONS_PRIVATE_KEY }}
         port: 22
