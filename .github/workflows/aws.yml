@@ -94,6 +94,7 @@ jobs:
         username: ${{ secrets.SSH_USER_NAME }}
         password: ${{ secrets.SSH_PASSWORD }}
         port: 22
+        timeout: 60s
         envs: ${{ github.sha }}
         debug: true
         script: |
