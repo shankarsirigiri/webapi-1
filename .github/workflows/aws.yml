@@ -93,10 +93,10 @@ jobs:
       with:
         host: ${{ secrets.HOST_NAME }}
         username: ${{ secrets.SSH_USER_NAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         timeout: 60s
         envs: ${{ github.sha }}
         debug: true
         script: |
-            docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:7f4573c73a2d8adfbc0a639d63913c1386fdfbaf
+            docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
