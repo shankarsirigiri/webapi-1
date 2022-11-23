@@ -91,8 +91,8 @@ jobs:
         REGISTRY_ALIAS: z8a4f8r0
       with:
         host: ${{ secrets.HOST_NAME }}
-        username: ubuntu
-        password: ${{ secrets.ACTIONS_PRIVATE_KEY }}
+        username: ${{ secrets.SSH_USER_NAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
         port: 22
         envs: ${{ github.sha }}
         script: |
