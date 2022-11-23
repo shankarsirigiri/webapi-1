@@ -99,4 +99,4 @@ jobs:
         timeout: 60s
         debug: true
         script: |
-            docker pull  public.ecr.aws/z8a4f8r0/weatherforecast:latest
+            docker pull  public.ecr.aws/z8a4f8r0/weatherforecast:a3ef02ffc85892dc942c8dd4fe5d3c08b1b03e09
