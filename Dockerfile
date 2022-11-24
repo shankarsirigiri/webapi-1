@@ -1,20 +1,20 @@
-#Stage 1: Define base image that will be used for production
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
-
-#Stage 2: Build and publish the code
+EXPOSE 443
+ 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /app
-COPY WebAPI/WebAPI.csproj .
-RUN dotnet restore 
+WORKDIR /src
+COPY ["WebAPI/WebAPI.csproj", "WebAPI/"]
+RUN dotnet restore "WebAPI/WebAPI.csproj"
 COPY . .
-
+WORKDIR "/src/WebAPI"
+RUN dotnet build "WebAPI.csproj" -c Release -o /app/build
+ 
 FROM build AS publish
-RUN dotnet publish -c Release -o /publish
-
-#Stage 3: Build and publish the code
+RUN dotnet publish "WebAPI.csproj" -c Release -o /app/publish
+ 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /publish .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "WebAPI.dll"]
