@@ -17,4 +17,5 @@ RUN dotnet publish -c Release -o /publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /publish .
+HEALTHCHECK CMD curl --fail http://localhost:8080/ || exit 1
 ENTRYPOINT ["dotnet", "WebAPI.dll"]
