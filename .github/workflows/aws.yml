@@ -98,6 +98,6 @@ jobs:
         port: 22
         timeout: 60s
         debug: true
-        script: |
+        run: |
             docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
             echo "::set-output name=image::$ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG"
