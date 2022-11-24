@@ -1,7 +1,7 @@
 #Stage 1: Define base image that will be used for production
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
-EXPOSE 24
+EXPOSE 80
 
 #Stage 2: Build and publish the code
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
@@ -17,5 +17,4 @@ RUN dotnet publish -c Release -o /publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /publish .
-HEALTHCHECK CMD curl --fail http://localhost:2424/ || exit 1
 ENTRYPOINT ["dotnet", "WebAPI.dll"]
