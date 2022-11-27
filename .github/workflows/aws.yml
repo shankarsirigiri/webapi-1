@@ -103,5 +103,5 @@ jobs:
             echo "REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}"
             echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
             echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
-            echo "pull command : ${{ $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG }}"
+            echo "pull command : $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG"
             docker pull $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
