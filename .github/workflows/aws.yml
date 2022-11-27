@@ -99,5 +99,12 @@ jobs:
         timeout: 60s
         debug: true
         script: |
+            echo "ECR_REGISTRY: ${{ env.ECR_REGISTRY }}"
+            echo "REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}"
+            echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
+            echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
+            echo "HOST_NAME: ${{ secrets.HOST_NAME }}"
+            echo "SSH_USER_NAME: ${{ secrets.SSH_USER_NAME }}"
+            echo "SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}"
             docker pull  $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
-            docker run -d -p 80:80 --name weatherforecast $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
+            
