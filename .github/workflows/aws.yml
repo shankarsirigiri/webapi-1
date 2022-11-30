@@ -73,14 +73,10 @@ jobs:
           
     - name: Build and push
       uses: docker/build-push-action@v3
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
-        REGISTRY_ALIAS: z8a4f8r0
-        IMAGE_TAG: ${{ github.sha }}
       with:
           context: .
           push: true
-          tags: $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
+          tags: public.ecr.aws/z8a4f8r0/weatherforecast:${{ github.sha }}
         
     - name: Docker pull & run from github
       uses: appleboy/ssh-action@master
