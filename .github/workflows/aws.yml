@@ -78,7 +78,7 @@ jobs:
           push: true
           tags: public.ecr.aws/z8a4f8r0/weatherforecast:${{ github.sha }}
         
-    - name: Docker pull & run from github
+    - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       env:
          ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
@@ -97,5 +97,5 @@ jobs:
             echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
     - uses: addnab/docker-run-action@v3
       with:
-        image: public.ecr.aws/z8a4f8r0/weatherforecast:${{ github.sha }}
+        image: ${{ steps.login-ecr-public.outputs.registry }}/z8a4f8r0/${{ steps.login-ecr-public.outputs.registry }}:${{ github.sha }}
         run: echo "hello world"
