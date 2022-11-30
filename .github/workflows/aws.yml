@@ -95,8 +95,7 @@ jobs:
             echo "REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}"
             echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
             echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
-    - name: Run the build process with Docker
-      uses: addnab/docker-run-action@v3
+    - uses: addnab/docker-run-action@v3
       with:
         image: public.ecr.aws/z8a4f8r0/weatherforecast:latest
         run: |
