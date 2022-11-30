@@ -70,20 +70,13 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
       with:
           registry-type: public
-
-    - name: Build, tag, and push image to Amazon ECR Public
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
-        REGISTRY_ALIAS: z8a4f8r0
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+          context: .
+          push: true
+          tags: public.ecr.aws/z8a4f8r0/weatherforecast:latest
         
     - name: Docker pull & run from github
       uses: appleboy/ssh-action@master
