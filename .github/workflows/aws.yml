@@ -76,7 +76,7 @@ jobs:
       with:
           context: .
           push: true
-          tags: public.ecr.aws/z8a4f8r0/weatherforecast:${{ github.sha }}
+          tags: public.ecr.aws/z8a4f8r0/weatherforecast:latest
         
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
@@ -97,5 +97,5 @@ jobs:
             echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
     - uses: addnab/docker-run-action@v3
       with:
-        image: ${{ steps.login-ecr-public.outputs.registry }}/z8a4f8r0/${{ steps.login-ecr-public.outputs.registry }}:${{ github.sha }}
+        image: public.ecr.aws/z8a4f8r0/weatherforecast:latest
         run: echo "hello world"
