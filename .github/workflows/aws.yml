@@ -71,12 +71,19 @@ jobs:
       with:
           registry-type: public
           
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-          context: .
-          push: true
-          tags: public.ecr.aws/z8a4f8r0/weatherforecast:latest
+    - name: Build, tag, and push image to Amazon ECR Public
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+        REGISTRY_ALIAS: z8a4f8r0
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -t $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
@@ -95,9 +102,5 @@ jobs:
             echo "REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}"
             echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
             echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
-    - uses: addnab/docker-run-action@v3
-      with:
-        image: public.ecr.aws/z8a4f8r0/weatherforecast:latest
-        run: |
-         docker pull public.ecr.aws/z8a4f8r0/weatherforecast:latest
-         docker run —detach —name weatherforecast -p 80:80 public.ecr.aws/z8a4f8r0/weatherforecast:latest
+            docker pull $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
+            docker run --detach --name weatherforecast -p 80:8080 $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
