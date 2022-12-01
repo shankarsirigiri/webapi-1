@@ -81,9 +81,9 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        docker build -t $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:latest .
+        docker push $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:latest
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
         
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
@@ -103,4 +103,4 @@ jobs:
             echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
             echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
             sudo docker pull $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
-            sudo docker run --name test public.ecr.aws/z8a4f8r0/weatherforecast:cc800790dfd5d139d992fc8ce974e75e6a995940
+            sudo docker run --name test -p 80:8080 public.ecr.aws/z8a4f8r0/weatherforecast:latest
