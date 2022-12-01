@@ -103,4 +103,4 @@ jobs:
             echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
             echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
             sudo docker pull $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
-            sudo docker run --name test -p 80:8080 public.ecr.aws/z8a4f8r0/weatherforecast:latest
+            sudo docker run --name weatherforecast -p 80:8080 public.ecr.aws/z8a4f8r0/weatherforecast:latest
